@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RWBTaskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RWBTask.dbo.vwEventInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwEventInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="LeagueName" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="LeagueId" />
+            <PropertyRef Name="SportId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SportName" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="StartTime" Type="datetime2" Precision="2" Nullable="false" />
+          <Property Name="LeagueName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LeagueId" Type="bigint" Nullable="false" />
+          <Property Name="SportId" Type="bigint" Nullable="false" />
+          <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="SportName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RWBTask.dbo.vwEventMarketLines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwEventMarketLines">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EventId" />
+            <PropertyRef Name="MarketName" />
+            <PropertyRef Name="IsLive" />
+            <PropertyRef Name="LineName" />
+            <PropertyRef Name="Price" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="EventId" Type="bigint" Nullable="false" />
+          <Property Name="MarketName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsLive" Type="bit" Nullable="false" />
+          <Property Name="LineName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RWBTaskModelStoreContainer">
+          <EntitySet Name="vwEventInformation" EntityType="Self.vwEventInformation" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vwEventInformation].[Id] AS [Id], 
+[vwEventInformation].[Name] AS [Name], 
+[vwEventInformation].[StartTime] AS [StartTime], 
+[vwEventInformation].[LeagueName] AS [LeagueName], 
+[vwEventInformation].[CategoryName] AS [CategoryName], 
+[vwEventInformation].[LeagueId] AS [LeagueId], 
+[vwEventInformation].[SportId] AS [SportId], 
+[vwEventInformation].[CategoryId] AS [CategoryId], 
+[vwEventInformation].[SportName] AS [SportName]
+FROM [dbo].[vwEventInformation] AS [vwEventInformation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwEventMarketLines" EntityType="Self.vwEventMarketLines" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vwEventMarketLines].[Id] AS [Id], 
+[vwEventMarketLines].[EventId] AS [EventId], 
+[vwEventMarketLines].[MarketName] AS [MarketName], 
+[vwEventMarketLines].[IsLive] AS [IsLive], 
+[vwEventMarketLines].[LineName] AS [LineName], 
+[vwEventMarketLines].[Price] AS [Price]
+FROM [dbo].[vwEventMarketLines] AS [vwEventMarketLines]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RWBTaskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="vwEventInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="LeagueName" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="LeagueId" />
+            <PropertyRef Name="SportId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SportName" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="2" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LeagueId" Type="Int64" Nullable="false" />
+          <Property Name="SportId" Type="Int64" Nullable="false" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="SportName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RWBTaskEntitiesConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vwEventInformations" EntityType="Self.vwEventInformation" />
+          <EntitySet Name="vwEventMarketLines" EntityType="RWBTaskModel.vwEventMarketLine" />
+        </EntityContainer>
+        <EntityType Name="vwEventMarketLine">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EventId" />
+            <PropertyRef Name="MarketName" />
+            <PropertyRef Name="IsLive" />
+            <PropertyRef Name="LineName" />
+            <PropertyRef Name="Price" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="EventId" Type="Int64" Nullable="false" />
+          <Property Name="MarketName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsLive" Type="Boolean" Nullable="false" />
+          <Property Name="LineName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="9" Scale="4" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RWBTaskModelStoreContainer" CdmEntityContainer="RWBTaskEntitiesConnection">
+          <EntitySetMapping Name="vwEventInformations">
+            <EntityTypeMapping TypeName="RWBTaskModel.vwEventInformation">
+              <MappingFragment StoreEntitySet="vwEventInformation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="LeagueId" ColumnName="LeagueId" />
+                <ScalarProperty Name="SportId" ColumnName="SportId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SportName" ColumnName="SportName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwEventMarketLines">
+            <EntityTypeMapping TypeName="RWBTaskModel.vwEventMarketLine">
+              <MappingFragment StoreEntitySet="vwEventMarketLines">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="LineName" ColumnName="LineName" />
+                <ScalarProperty Name="IsLive" ColumnName="IsLive" />
+                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
