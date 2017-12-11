@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskApi", "RWBTaskApi\RW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskDAL", "RWBTaskDAL\RWBTaskDAL.csproj", "{C350954E-FE2A-476D-84C0-AFD18CA55217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskWeb", "RWBTaskWeb\RWBTaskWeb.csproj", "{AB574E59-9969-4CAE-9446-A387A785FCFE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{C350954E-FE2A-476D-84C0-AFD18CA55217}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C350954E-FE2A-476D-84C0-AFD18CA55217}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C350954E-FE2A-476D-84C0-AFD18CA55217}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB574E59-9969-4CAE-9446-A387A785FCFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB574E59-9969-4CAE-9446-A387A785FCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB574E59-9969-4CAE-9446-A387A785FCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB574E59-9969-4CAE-9446-A387A785FCFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

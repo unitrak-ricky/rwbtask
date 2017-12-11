@@ -9,6 +9,16 @@ namespace RWBTaskApi.Controllers
 {
     public class ValuesController : ApiController
     {
+
+        
+        [AllowAnonymous]
+        public IEnumerable<string> Get()
+        {
+            TaskHub.SayHello();
+
+            return new string[] { "value1", "value2" };
+        }
+
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
         [Route("api/values/GetEvents")]
@@ -37,7 +47,6 @@ namespace RWBTaskApi.Controllers
 
                 db.Dispose();
             }
-
             return Ok(list);
         }
 
@@ -57,10 +66,11 @@ namespace RWBTaskApi.Controllers
                     IsLive = sm.IsLive,
                     LineName = sm.LineName,
                     Price = sm.Price,
-                    EventId = sm.EventId
+                    EventId = sm.EventId,
+                    LineId = sm.LineId
                 })
                 .ToList();
-            model.EventMarkets.ForEach(m => CalcMarketLine(m, db));
+            //model.EventMarkets.ForEach(m => CalcMarketLine(m, db));
         }
 
         private void CalcMarketLine(EventMarket m, RWBTaskEntitiesConnection db)
@@ -72,7 +82,8 @@ namespace RWBTaskApi.Controllers
                     MarketId = m.Id,
                     Id = ls.Id,
                     Name = ls.LineName,
-                    Price = ls.Price
+                    Price = ls.Price,
+                    LineId = ls.LineId
                 })
                 .ToList();
         }

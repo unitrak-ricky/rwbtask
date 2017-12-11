@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="RWBTaskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarketId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="4" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'RWBTask.dbo.vwEventInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwEventInformation">
@@ -39,6 +48,7 @@ warning 6002: The table/view 'RWBTask.dbo.vwEventMarketLines' does not have a pr
             <PropertyRef Name="IsLive" />
             <PropertyRef Name="LineName" />
             <PropertyRef Name="Price" />
+            <PropertyRef Name="LineId" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="EventId" Type="bigint" Nullable="false" />
@@ -46,8 +56,10 @@ warning 6002: The table/view 'RWBTask.dbo.vwEventMarketLines' does not have a pr
           <Property Name="IsLive" Type="bit" Nullable="false" />
           <Property Name="LineName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="9" Scale="4" Nullable="false" />
+          <Property Name="LineId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityContainer Name="RWBTaskModelStoreContainer">
+          <EntitySet Name="Line" EntityType="Self.Line" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwEventInformation" EntityType="Self.vwEventInformation" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [vwEventInformation].[Id] AS [Id], 
@@ -68,7 +80,8 @@ FROM [dbo].[vwEventInformation] AS [vwEventInformation]</DefiningQuery>
 [vwEventMarketLines].[MarketName] AS [MarketName], 
 [vwEventMarketLines].[IsLive] AS [IsLive], 
 [vwEventMarketLines].[LineName] AS [LineName], 
-[vwEventMarketLines].[Price] AS [Price]
+[vwEventMarketLines].[Price] AS [Price], 
+[vwEventMarketLines].[LineId] AS [LineId]
 FROM [dbo].[vwEventMarketLines] AS [vwEventMarketLines]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -101,6 +114,7 @@ FROM [dbo].[vwEventMarketLines] AS [vwEventMarketLines]</DefiningQuery>
         <EntityContainer Name="RWBTaskEntitiesConnection" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vwEventInformations" EntityType="Self.vwEventInformation" />
           <EntitySet Name="vwEventMarketLines" EntityType="RWBTaskModel.vwEventMarketLine" />
+          <EntitySet Name="Lines" EntityType="RWBTaskModel.Line" />
         </EntityContainer>
         <EntityType Name="vwEventMarketLine">
           <Key>
@@ -110,12 +124,23 @@ FROM [dbo].[vwEventMarketLines] AS [vwEventMarketLines]</DefiningQuery>
             <PropertyRef Name="IsLive" />
             <PropertyRef Name="LineName" />
             <PropertyRef Name="Price" />
+            <PropertyRef Name="LineId" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="EventId" Type="Int64" Nullable="false" />
           <Property Name="MarketName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsLive" Type="Boolean" Nullable="false" />
           <Property Name="LineName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="9" Scale="4" />
+          <Property Name="LineId" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="9" Scale="4" />
         </EntityType>
       </Schema>
@@ -142,11 +167,22 @@ FROM [dbo].[vwEventMarketLines] AS [vwEventMarketLines]</DefiningQuery>
           <EntitySetMapping Name="vwEventMarketLines">
             <EntityTypeMapping TypeName="RWBTaskModel.vwEventMarketLine">
               <MappingFragment StoreEntitySet="vwEventMarketLines">
+                <ScalarProperty Name="LineId" ColumnName="LineId" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="LineName" ColumnName="LineName" />
                 <ScalarProperty Name="IsLive" ColumnName="IsLive" />
                 <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lines">
+            <EntityTypeMapping TypeName="RWBTaskModel.Line">
+              <MappingFragment StoreEntitySet="Line">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

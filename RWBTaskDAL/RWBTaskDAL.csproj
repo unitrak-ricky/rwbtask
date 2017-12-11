@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Line.cs">
+      <DependentUpon>TWBTaskModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TWBTaskModel.Context.cs">
       <AutoGen>True</AutoGen>

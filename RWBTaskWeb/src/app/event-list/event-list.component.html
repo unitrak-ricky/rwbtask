@@ -28,7 +28,7 @@
                                 <td>{{em.name}}</td>
                                 <td>{{em.isLive}}</td>
                                 <td>{{em.lineName}}</td>
-                                <td id="mid_{{em.id}}">{{em.price}}</td>
+                                <td id="mid_{{em.id}}_{{em.lineId}}" class="red">{{em.price}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -38,6 +38,5 @@
             <td>{{taskEvent.league}}</td>
             <td>{{taskEvent.startTime}}</td>
         </tr>
-
     </tbody>
 </table>

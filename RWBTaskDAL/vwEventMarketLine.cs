@@ -20,5 +20,6 @@ namespace RWBTaskDAL
         public bool IsLive { get; set; }
         public string LineName { get; set; }
         public decimal Price { get; set; }
+        public long LineId { get; set; }
     }
 }

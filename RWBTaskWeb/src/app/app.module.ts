@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
 
 import { RwbtaskService } from './rwbtask.service';
+import { EventPriceUpdateComponent } from './event-price-update/event-price-update.component';
 
 @Pipe({
   name: 'keyValues'
@@ -23,7 +24,8 @@ export class KeysPipe implements PipeTransform {
   declarations: [
     AppComponent,
     EventListComponent,
-    KeysPipe
+    KeysPipe,
+    EventPriceUpdateComponent
   ],
   imports: [
       BrowserModule,

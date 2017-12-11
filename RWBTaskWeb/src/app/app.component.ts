@@ -7,7 +7,9 @@ import { RwbtaskService } from './rwbtask.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'RWB Task';
+    title = 'RWB Test Task';
 
-    constructor( private rwbtastService: RwbtaskService){}
+    constructor( 
+      private rwbtastService: RwbtaskService
+    ){}
 }

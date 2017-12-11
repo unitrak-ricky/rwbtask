@@ -7,6 +7,7 @@
       <Diagram DiagramId="5ae09e141c02405798f080a2528d077c" Name="Diagram1">
         <EntityTypeShape EntityType="RWBTaskModel.vwEventInformation" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RWBTaskModel.vwEventMarketLine" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RWBTaskModel.Line" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

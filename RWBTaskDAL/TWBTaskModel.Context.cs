@@ -27,5 +27,6 @@ namespace RWBTaskDAL
     
         public DbSet<vwEventInformation> vwEventInformations { get; set; }
         public DbSet<vwEventMarketLine> vwEventMarketLines { get; set; }
+        public DbSet<Line> Lines { get; set; }
     }
 }

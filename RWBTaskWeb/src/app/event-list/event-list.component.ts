@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RwbtaskService } from '../rwbtask.service';
-import { Pipe, PipeTransform } from '@angular/core';
+
 
 @Component({
   selector: 'app-event-list',

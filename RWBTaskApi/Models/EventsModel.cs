@@ -30,6 +30,7 @@ namespace RWBTaskApi.Models
     public class MarketLine
     {
         public long Id { get; internal set; }
+        public long LineId { get; internal set; }
         public long MarketId { get; internal set; }
         public string Name { get; internal set; }
         public decimal Price { get; internal set; }
@@ -48,5 +49,6 @@ namespace RWBTaskApi.Models
         public bool IsLive { get; internal set; }
         public string LineName { get; internal set; }
         public decimal Price { get; internal set; }
+        public long LineId { get; internal set; }
     }
 }
