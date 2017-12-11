@@ -1,0 +1,43 @@
+<table class="table table-hovered table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Sport</th>
+            <th>Category</th>
+            <th>League</th>
+            <th>Start Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let taskEvent of taskEvents;">
+            <td>{{taskEvent.name}}</td>
+            <td>{{taskEvent.sport}}</td>
+            <td>{{taskEvent.category}} 
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Market Name</th>
+                                <th>Is Live</th>
+                                <th>Line Name</th>
+                                <th>Price</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let em of taskEvent.eventMarkets" >
+                                <td>{{em.name}}</td>
+                                <td>{{em.isLive}}</td>
+                                <td>{{em.lineName}}</td>
+                                <td id="mid_{{em.id}}">{{em.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                
+            </td>
+            <td>{{taskEvent.league}}</td>
+            <td>{{taskEvent.startTime}}</td>
+        </tr>
+
+    </tbody>
+</table>
