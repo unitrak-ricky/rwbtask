@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskApi", "RWBTaskApi\RW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskDAL", "RWBTaskDAL\RWBTaskDAL.csproj", "{C350954E-FE2A-476D-84C0-AFD18CA55217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskWeb", "TWBTaskWeb\RWBTaskWeb.csproj", "{AB574E59-9969-4CAE-9446-A387A785FCFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RWBTaskWeb", "RWBTaskWeb\RWBTaskWeb.csproj", "{AB574E59-9969-4CAE-9446-A387A785FCFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
