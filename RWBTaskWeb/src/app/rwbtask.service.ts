@@ -14,9 +14,7 @@ export class RwbtaskService {
     constructor(private _http: Http) { }
 
     getEvents() {
-        const _headers = new Headers({
-            'Access-Control-Allow-Origin' : 'http://localhost:4200'
-        });
+      
         return this._http.get(this.baseUrl + 'getEvents')
             .map((resp: Response) => resp.json())
             .catch(this._errorHandler);

@@ -28,7 +28,9 @@
                                 <td>{{em.name}}</td>
                                 <td>{{em.isLive}}</td>
                                 <td>{{em.lineName}}</td>
-                                <td id="mid_{{em.id}}_{{em.lineId}}" class="red">{{em.price}}</td>
+                                <td id="mid_{{em.id}}_{{em.lineId}}">
+                                    <price-indicator></price-indicator>{{em.price}}
+                                </td>
                             </tr>
                         </tbody>
                     </table>

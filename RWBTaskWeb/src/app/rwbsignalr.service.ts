@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable , Inject} from '@angular/core';
 import {Subject} from "rxjs/Subject";  
 import {Observable} from "rxjs/Observable";
 
@@ -13,29 +13,30 @@ export enum ConnectionState {
   Disconnected = 4
 }
 
-export class RwbsignalrConfig {  
+export class RWBTaskConfig {  
   url: string;
   hubName: string;
   channel: string;
 }
 
-export class RwbsignalrEvent {  
+export class RWBTaskEvent {  
   Name: string;
-  Timestamp: Date;
-  Json: string;
   ChannelName: string;
+  Timestamp: Date;
+  Data: any;
+  Json: string;
+
   constructor() {
       this.Timestamp = new Date();
   }
 }
 
-class RwbsignalrSubject {  
-  subject: Subject<RwbsignalrEvent>;
+class RWBTaskSubject {  
+  subject: Subject<RWBTaskEvent>;
   channel: string;
 }
 
-@Injectable()
-export class RwbsignalrService {
+@Injectable() export class RwbsignalrService {
 
   starting$: Observable<any>;
   connectionState$: Observable<ConnectionState>;
@@ -48,11 +49,11 @@ export class RwbsignalrService {
   private hubConnection: any;
   private hubProxy: any;
 
-  private subjects = new Array<RwbsignalrSubject>();
+  private subjects = new Array<RWBTaskSubject>();
 
   constructor(
     @Inject(SignalrWindow) private window: SignalrWindow,
-    @Inject("rwbsignalr.config") private rwbsignalrConfig: RwbsignalrConfig
+    @Inject("rwbsignalr.config") private rwbsignalrConfig: RWBTaskConfig
   ) { 
 
     if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
@@ -70,7 +71,7 @@ export class RwbsignalrService {
 
     this.hubConnection.stateChanged((state: any) => {
       let newState = ConnectionState.Connecting;
-
+      debugger;
       switch (state.newState) {
           case this.window.$.signalR.connectionState.connecting:
               newState = ConnectionState.Connecting;
@@ -90,6 +91,7 @@ export class RwbsignalrService {
     });
 
     this.hubConnection.error((error: any) => {
+      debugger;
       this.errorSubject.next(error);
     });
 
@@ -98,7 +100,7 @@ export class RwbsignalrService {
         console.log('hello world from web api');
     });
 
-    this.hubProxy.on("onEvent", (channel: string, ev: RwbsignalrEvent) => {
+    this.hubProxy.on("onEvent", (channel: string, ev: RWBTaskEvent) => {
       debugger;
       //console.log(`onEvent - ${channel} channel`, ev);
 
@@ -107,20 +109,99 @@ export class RwbsignalrService {
       //  for the channel this came in on, and then emit the event
       //  on it. Otherwise we ignore the message.
       //
-      let channelSub = this.subjects.find((x: RwbsignalrSubject) => {
+      let channelSub = this.subjects.find((x: RWBTaskSubject) => {
           return x.channel === channel;
-      }) as RwbsignalrSubject;
+      }) as RWBTaskSubject;
 
       // If we found a subject then emit the event on it
       //
       if (channelSub !== undefined) {
           return channelSub.subject.next(ev);
       }
-  });
+    });
 
 
 
+  } //end of constructor
 
-  }
+  start(): void {
+    // Now we only want the connection started once, so we have a special
+    //  starting$ observable that clients can subscribe to know know if
+    //  if the startup sequence is done.
+    //
+    // If we just mapped the start() promise to an observable, then any time
+    //  a client subscried to it the start sequence would be triggered
+    //  again since it's a cold observable.
+    //
+    this.hubConnection.start()
+        .done(() => {
+          debugger;
+          this.startingSubject.next();
+        })
+        .fail((error: any) => {
+            this.startingSubject.error(error);
+        });
+
+    
+  } //end of start
+
+  sub(channel: string): Observable<RWBTaskEvent> {
+    
+            // Try to find an observable that we already created for the requested 
+            //  channel
+            //
+            let channelSub = this.subjects.find((x: RWBTaskSubject) => {
+                return x.channel === channel;
+            }) as RWBTaskSubject;
+    
+            // If we already have one for this event, then just return it
+            //
+            if (channelSub !== undefined) {
+                console.log(`Found existing observable for ${channel} channel`)
+                return channelSub.subject.asObservable();
+            }
+    
+            //
+            // If we're here then we don't already have the observable to provide the
+            //  caller, so we need to call the server method to join the channel 
+            //  and then create an observable that the caller can use to received
+            //  messages.
+            //
+    
+            // Now we just create our internal object so we can track this subject
+            //  in case someone else wants it too
+            //
+            channelSub = new RWBTaskSubject();
+            channelSub.channel = channel;
+            channelSub.subject = new Subject<RWBTaskEvent>();
+            this.subjects.push(channelSub);
+    
+            // Now SignalR is asynchronous, so we need to ensure the connection is
+            //  established before we call any server methods. So we'll subscribe to 
+            //  the starting$ stream since that won't emit a value until the connection
+            //  is ready
+            //
+            this.starting$.subscribe(() => {
+                this.hubProxy.invoke("Subscribe", channel)
+                    .done(() => {
+                        console.log(`Successfully subscribed to ${channel} channel`);
+                    })
+                    .fail((error: any) => {
+                        channelSub.subject.error(error);
+                    });
+            },
+                (error: any) => {
+                    channelSub.subject.error(error);
+                });
+    
+            return channelSub.subject.asObservable();
+    } // end of sub
+
+    publish(ev: RWBTaskEvent): void {
+      this.hubProxy.invoke("Publish", ev);
+    }
+
+
+
 
 }

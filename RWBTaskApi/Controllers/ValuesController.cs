@@ -10,8 +10,10 @@ namespace RWBTaskApi.Controllers
     public class ValuesController : ApiController
     {
 
-        
+
         [AllowAnonymous]
+        [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+        [HttpGet]
         public IEnumerable<string> Get()
         {
             TaskHub.SayHello();

@@ -1,7 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
 .red {
     background-color: red;
+    color: white;
+    padding: 1px;
 }
 .green {
     background-color:green;
+    color: white;
+    padding: 1px;
 }
