@@ -23,8 +23,8 @@ export class KeysPipe implements PipeTransform {
 
 
 let channelConfig = new RWBTaskConfig();  
-channelConfig.url = 'http://localhost:55341/api/values';
-channelConfig.hubName = "EventHub";
+channelConfig.url = 'http://localhost:55341/api/values/';
+channelConfig.hubName = "TaskHub";
 
 @NgModule({
   declarations: [
