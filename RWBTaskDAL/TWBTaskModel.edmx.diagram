@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5ae09e141c02405798f080a2528d077c" Name="Diagram1">
-        <EntityTypeShape EntityType="RWBTaskModel.vwEventInformation" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RWBTaskModel.vwEventMarketLine" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="RWBTaskModel.Line" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RWBTaskModel.vwEventInformation" Width="2.25" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RWBTaskModel.vwEventMarketLine" Width="2.5" PointX="4" PointY="0.75" />
+        <EntityTypeShape EntityType="RWBTaskModel.Line" Width="1.5" PointX="1.875" PointY="4.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

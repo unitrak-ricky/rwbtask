@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
-import { EventPriceUpdateComponent } from './event-price-update/event-price-update.component';
+import { TaskComponent } from './task/task.component';
 
 import { RwbtaskService } from './rwbtask.service';
-import { RwbsignalrService,RWBTaskConfig, SignalrWindow } from './rwbsignalr.service';
+import { ChannelService,ChannelConfig, SignalrWindow } from './channel.service';
 
 
 @Pipe({
@@ -22,16 +22,16 @@ export class KeysPipe implements PipeTransform {
 }
 
 
-let channelConfig = new RWBTaskConfig();  
-channelConfig.url = 'http://localhost:55341/api/values/';
-channelConfig.hubName = "TaskHub";
+let channelConfig = new ChannelConfig();  
+channelConfig.url = 'http://localhost:55341/api/task';
+channelConfig.hubName = "EventHub";
 
 @NgModule({
   declarations: [
     AppComponent,
     EventListComponent,
-    KeysPipe,
-    EventPriceUpdateComponent
+    TaskComponent,
+    KeysPipe
   ],
   imports: [
       BrowserModule,
@@ -42,9 +42,9 @@ channelConfig.hubName = "TaskHub";
   ],
   providers: [
     RwbtaskService,
-    RwbsignalrService,
+    ChannelService,
     {provide: SignalrWindow, useValue: window},
-    {provide: "rwbsignalr.config", useValue: channelConfig}
+    {provide: "channel.config", useValue: channelConfig}
   ],
   bootstrap: [AppComponent]
 })

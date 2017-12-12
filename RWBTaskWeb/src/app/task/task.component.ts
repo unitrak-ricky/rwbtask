@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { RwbsignalrService, RWBTaskEvent } from '../rwbsignalr.service';
+import { ChannelService, ChannelEvent } from '../channel.service';
 
 class StatusEvent {
   State: string;
@@ -9,44 +9,40 @@ class StatusEvent {
 }
 
 @Component({
-  selector: 'price-indicator',
-  template: '<i class="glyphicon glyphicon-bell {{cssName}}"></i>'
+  selector: 'task',
+  templateUrl: './task.component.html'
 })
 
-export class EventPriceUpdateComponent implements OnInit {
+export class TaskComponent implements OnInit {
   @Input() eventName: string;
-  @Input() apiUrl: string;
+  apiUrl: string = 'http://localhost:55341/api/tasks/';
 
-  taskEvent: any;
   cssName  = "green";
   messages = "";
 
-  private channel = "tasks";
+  private channel = "api/tasks";
 
   constructor(
     private http: Http,
-    private rwbSignalrService: RwbsignalrService
+    private channelService: ChannelService
   ) {
 
   }
 
   ngOnInit() {
-    this.rwbSignalrService.sub(this.channel).subscribe(
-      (x: RWBTaskEvent) => {
-          debugger;
-          switch (x.Name) {
-              case this.eventName: { this.appendStatusUpdate(x); }
-          }
-      },
-      (error: any) => {
-          console.warn("Attempt to join channel failed!", error);
-      }
+    this.channelService.sub(this.channel).subscribe(
+        (x: ChannelEvent) => {
+            switch (x.Name) {
+                case this.eventName: { this.appendStatusUpdate(x); }
+            }
+        },
+        (error: any) => {
+            console.warn("Attempt to join channel failed!", error);
+        }
     )
-
-    this.callApi();
   }
 
-  private appendStatusUpdate(ev:RWBTaskEvent): void {
+  private appendStatusUpdate(ev:ChannelEvent): void {
     
     let date = new Date();
     switch (ev.Data.State) {
@@ -67,7 +63,9 @@ export class EventPriceUpdateComponent implements OnInit {
 }
 
 callApi() {
-    this.http.get(this.apiUrl)
+    debugger;
+    
+    this.http.get(this.apiUrl + 'getlongtask')
         .map((res: Response) => res.json())
         .subscribe((message: string) => { console.log(message); });
 }
