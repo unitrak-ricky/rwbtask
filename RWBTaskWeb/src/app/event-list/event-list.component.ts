@@ -1,25 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { RwbtaskService } from '../rwbtask.service';
 
 
 @Component({
-  selector: 'app-event-list',
+  selector: 'rwb-event-list',
   templateUrl: './event-list.component.html'
  
 })
 
-
-
 export class EventListComponent implements OnInit {
 
-    taskEvents: Array<any> = [];
+    rwbEvents: Array<any> = [];
     errorMessage: any;
 
     constructor(
         private _rwbtaskService: RwbtaskService,
-        private _router: Router,
-        private _activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit() {
@@ -30,7 +25,7 @@ export class EventListComponent implements OnInit {
         this._rwbtaskService.getEvents().subscribe(
             data => {
                 console.log(data),
-                this.taskEvents = data
+                this.rwbEvents = data
             },
             error => {
                 debugger;

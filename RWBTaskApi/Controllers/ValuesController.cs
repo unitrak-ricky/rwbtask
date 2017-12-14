@@ -1,4 +1,5 @@
-﻿using RWBTaskApi.Models;
+﻿using Microsoft.AspNet.SignalR;
+using RWBTaskApi.Models;
 using RWBTaskDAL;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,25 @@ namespace RWBTaskApi.Controllers
     public class ValuesController : ApiController
     {
 
+        private IHubContext _context;
+
+        public ValuesController()
+        {
+            _context = GlobalHost.ConnectionManager.GetHubContext<EventHub>();
+        }
+
         [AllowAnonymous]
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
-        [Route("api/values/negotiate")]
-        public IHttpActionResult Get()
+        [Route("values/")]
+        public IHttpActionResult GetPriceIndicator()
         {
+            _context.Clients.All().updateIndicator("red");
             return Ok();
         }
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
         [HttpGet]
-        [Route("api/values/GetEvents")]
+        [Route("values/GetEvents")]
         public IHttpActionResult GetEvents()
         {
             //return Ok(new string[] { "Hello World!", "This is a task." });

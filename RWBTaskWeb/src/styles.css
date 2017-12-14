@@ -1,14 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-
-.red {
-    background-color: red;
+.channel-indicator{
     color: white;
     padding: 1px;
     margin-right: 2px;
 }
+.red {
+    background-color: red;
+    
+}
 .green {
     background-color:green;
-    color: white;
-    padding: 1px;
-    margin-right: 2px;
 }

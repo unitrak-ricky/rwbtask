@@ -4,9 +4,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { Pipe, PipeTransform } from '@angular/core';
 
+import "rxjs/add/operator/map";
+
 import { AppComponent } from './app.component';
-import { EventListComponent } from './event-list/event-list.component';
 import { TaskComponent } from './task/task.component';
+import { EventListComponent } from './event-list/event-list.component';
+
+
 
 import { RwbtaskService } from './rwbtask.service';
 import { ChannelService,ChannelConfig, SignalrWindow } from './channel.service';
@@ -21,17 +25,15 @@ export class KeysPipe implements PipeTransform {
   }
 }
 
-
 let channelConfig = new ChannelConfig();  
-channelConfig.url = 'http://localhost:55341/api/task';
+channelConfig.url = 'http://localhost:55341/signalr';
 channelConfig.hubName = "EventHub";
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventListComponent,
     TaskComponent,
-    KeysPipe
+    EventListComponent
   ],
   imports: [
       BrowserModule,

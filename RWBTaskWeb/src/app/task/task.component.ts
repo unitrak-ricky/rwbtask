@@ -15,12 +15,12 @@ class StatusEvent {
 
 export class TaskComponent implements OnInit {
   @Input() eventName: string;
-  apiUrl: string = 'http://localhost:55341/api/tasks/';
+  @Input() apiUrl: string;
 
   cssName  = "green";
   messages = "";
-
-  private channel = "api/tasks";
+  
+  private channel = "tasks";
 
   constructor(
     private http: Http,
@@ -59,13 +59,14 @@ export class TaskComponent implements OnInit {
         default: {
             this.messages = `${date.toLocaleTimeString()} : ${ev.Data.State} : ${ev.Data.PercentComplete} % complete\n` + this.messages;
         }
+
+        console.log(`${date.toLocaleTimeString()} : ` + ev.Data.State +'\n' + this.messages);
     }
 }
 
 callApi() {
-    debugger;
     
-    this.http.get(this.apiUrl + 'getlongtask')
+    this.http.get('http://localhost:55341/tasks/long')
         .map((res: Response) => res.json())
         .subscribe((message: string) => { console.log(message); });
 }

@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
       // Start the connection up!
       //
       console.log("Starting the channel service");
-
       this.channelService.start();
   }
 }

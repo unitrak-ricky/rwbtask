@@ -10,7 +10,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class RwbtaskService {
-    baseUrl: string = 'http://localhost:55341/api/values/'
+    baseUrl: string = 'http://localhost:55341/values/'
     constructor(private _http: Http) { }
 
     getEvents() {

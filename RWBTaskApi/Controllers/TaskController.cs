@@ -11,6 +11,8 @@ using System.Web.Http.Cors;
 
 namespace RWBTaskApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+    [RoutePrefix("tasks")]
     public class TaskController : ApiController
     {
         private IHubContext _context;
@@ -22,13 +24,11 @@ namespace RWBTaskApi.Controllers
 
         public TaskController()
         {
-            // Normally we would inject this
-            //
             _context = GlobalHost.ConnectionManager.GetHubContext<EventHub>();
         }
 
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-        [Route("api/tasks/getlongtask")]
+        [Route("long")]
         [HttpGet]
         public IHttpActionResult GetLongTask()
         {
@@ -42,43 +42,15 @@ namespace RWBTaskApi.Controllers
         }
 
 
-        [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-        [Route("api/tasks/short")]
-        [HttpGet]
-        public IHttpActionResult GetShortTask()
-        {
-            
-            double steps = 5;
-            var eventName = "shortTask.status";
-
-            ExecuteTask(eventName, steps);
-
-            return Ok("Short task complete");
-        }
-
         private void ExecuteTask(string eventName, double steps)
         {
             var status = new Status
             {
-                State = "starting",
-                PercentComplete = 0.0
+                State = "completed",
+                Indicator= "red",
+                PercentComplete = 100,
             };
-
-            PublishEvent(eventName, status);
-
-            for (double i = 0; i < steps; i++)
-            {
-                // Update the status and publish a new event
-                //
-                status.State = "working";
-                status.PercentComplete = (i / steps) * 100;
-                PublishEvent(eventName, status);
-
-                Thread.Sleep(500);
-            }
-
-            status.State = "complete";
-            status.PercentComplete = 100;
+            
             PublishEvent(eventName, status);
         }
 
@@ -89,12 +61,20 @@ namespace RWBTaskApi.Controllers
             //  to it. So to publish the event we need to call the method that
             //  the clients will be listening on.
             //
-            _context.Clients.Group(_channel).OnEvent(_taskChannel, new ChannelEvent
+
+            _context.Clients.All.OnEvent(_taskChannel, new ChannelEvent
             {
                 ChannelName = _taskChannel,
                 Name = eventName,
                 Data = status
             });
+
+            //_context.Clients.Group(_channel).OnEvent(_taskChannel, new ChannelEvent
+            //{
+            //    ChannelName = _taskChannel,
+            //    Name = eventName,
+            //    Data = status
+            //});
         }
     }
 
@@ -102,7 +82,7 @@ namespace RWBTaskApi.Controllers
     public class Status
     {
         public string State { get; set; }
-
+        public string Indicator { get; set; }
         public double PercentComplete { get; set; }
     }
 }

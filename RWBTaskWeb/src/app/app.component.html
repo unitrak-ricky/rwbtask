@@ -4,7 +4,13 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h2 class="panel-title">Events Listing</h2></div>
         <div class="panel-body">
-            <app-event-list></app-event-list>
+            <rwb-event-list></rwb-event-list>
+
+            <div>
+                <span>Connection state: {{connectionState$ | async}}</span>
+            </div>
+    
+            
         </div>
         <div class="panel-footer"></div>
     </div>

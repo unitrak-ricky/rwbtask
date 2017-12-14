@@ -8,11 +8,11 @@
             <th>Start Time</th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let taskEvent of taskEvents;">
-            <td>{{taskEvent.name}}</td>
-            <td>{{taskEvent.sport}}</td>
-            <td>{{taskEvent.category}} 
+    <tbody *ngIf="rwbEvents">
+        <tr *ngFor="let ev of rwbEvents;">
+            <td>{{ev.Name}}</td>
+            <td>{{ev.Sport}}</td>
+            <td>{{ev.Category}} 
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -24,12 +24,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let em of taskEvent.eventMarkets" >
-                                <td>{{em.name}}</td>
-                                <td>{{em.isLive}}</td>
-                                <td>{{em.lineName}}</td>
+                            <tr *ngFor="let em of ev.EventMarkets" >
+                                <td>{{em.Name}}</td>
+                                <td>{{em.IsLive}}</td>
+                                <td>{{em.LineName}}</td>
                                 <td id="mid_{{em.id}}_{{em.lineId}}">
-                                    {{em.price}}
+                                    {{em.Price}}
                                 </td>
                             </tr>
                         </tbody>
@@ -37,8 +37,8 @@
                     
                 
             </td>
-            <td>{{taskEvent.league}}</td>
-            <td>{{taskEvent.startTime}}</td>
+            <td>{{ev.League}}</td>
+            <td>{{ev.StartTime}}</td>
         </tr>
     </tbody>
 </table>
