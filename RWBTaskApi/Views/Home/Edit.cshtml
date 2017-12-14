@@ -11,8 +11,11 @@
     @Html.ValidationSummary(true)
 
 <div class="body-content">
-    <fieldset>
-        <legend>Person</legend>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="panel-title">Price Lines</h2></div>
+
+    </div>
+    <div class="panel-body">
 
         @Html.HiddenFor(model => model.Id)
 
@@ -20,19 +23,18 @@
             @Html.LabelFor(model => model.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
+            @Html.EditorFor(model => model.Name, new { @class="form-control" } )
             @Html.ValidationMessageFor(model => model.Name)
         </div>
 
         <div class="editor-label">
-            @Html.EditorFor(model => model.Price)
+            @Html.EditorFor(model => model.Price, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Price)
         </div>
-       
-        <div>
-            <input type="submit" value="Update" />
-        </div>
-    </fieldset>
+    </div>
+    <div class="panel-footer">
+        <input type="submit" value="Update" class="btn btn-default"/>
+    </div>   
 </div>
 
 }
