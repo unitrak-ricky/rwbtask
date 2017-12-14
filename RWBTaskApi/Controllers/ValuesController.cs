@@ -18,13 +18,11 @@ namespace RWBTaskApi.Controllers
             _context = GlobalHost.ConnectionManager.GetHubContext<EventHub>();
         }
 
-        [AllowAnonymous]
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-        [HttpGet]
-        [Route("values/")]
-        public IHttpActionResult GetPriceIndicator()
+        [HttpPost]
+        public IHttpActionResult PostPriceUpdate(int lineId)
         {
-            _context.Clients.All().updateIndicator("red");
+            //_context.Clients.All().onEvent("red");
             return Ok();
         }
         [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]

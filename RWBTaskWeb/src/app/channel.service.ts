@@ -42,39 +42,19 @@ class ChannelSubject {
     subject: Subject<ChannelEvent>;
 }
 
-/**
- * ChannelService is a wrapper around the functionality that SignalR
- * provides to expose the ideas of channels and events. With this service
- * you can subscribe to specific channels (or groups in signalr speak) and
- * use observables to react to specific events sent out on those channels.
- */
+
 @Injectable()
 export class ChannelService {
 
-    /**
-     * starting$ is an observable available to know if the signalr 
-     * connection is ready or not. On a successful connection this
-     * stream will emit a value.
-     */
+    indicatorName: string;
     starting$: Observable<any>;
-
-    /**
-     * connectionState$ provides the current state of the underlying
-     * connection as an observable stream.
-     */
     connectionState$: Observable<ConnectionState>;
-
-    /**
-     * error$ provides a stream of any error messages that occur on the 
-     * SignalR connection
-     */
     error$: Observable<string>;
 
-    // These are used to feed the public observables 
-    //
     private connectionStateSubject = new Subject<ConnectionState>();
     private startingSubject = new Subject<any>();
     private errorSubject = new Subject<any>();
+    
 
     // These are used to track the internal SignalR state 
     //
@@ -84,17 +64,16 @@ export class ChannelService {
     // An internal array to track what channel subscriptions exist 
     //
     private subjects = new Array<ChannelSubject>();
+    private channelEvent = new ChannelEvent();
 
     constructor(
         @Inject(SignalrWindow) private window: SignalrWindow,
         @Inject("channel.config") private channelConfig: ChannelConfig
     ) {
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
-            throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
+            throw new Error("SignalR scripts not loaded properly");
         }
 
-        // Set up our observables
-        //
         this.connectionState$ = this.connectionStateSubject.asObservable();
         this.error$ = this.errorSubject.asObservable();
         this.starting$ = this.startingSubject.asObservable();
@@ -103,8 +82,6 @@ export class ChannelService {
         this.hubConnection.url = channelConfig.url;
         this.hubProxy = this.hubConnection.createHubProxy(channelConfig.hubName);
 
-        // Define handlers for the connection state events
-        //
         this.hubConnection.stateChanged((state: any) => {
             let newState = ConnectionState.Connecting;
             switch (state.newState) {
@@ -122,26 +99,25 @@ export class ChannelService {
                     break;
             }
 
-            // Push the new state on our subject
-            //
             this.connectionStateSubject.next(newState);
         });
 
-        // Define handlers for any errors
-        //
         this.hubConnection.error((error: any) => {
-            // Push the error on our subject
-            //
             this.errorSubject.next(error);
         });
 
         this.hubProxy.on("onEvent", (channel: string, ev: ChannelEvent) => {
+
+            //this.window.$(ev.Data.Indicator).html(ev.Data.Price);
+            this.window.$(ev.Data.Indicator).removeAttr('class');
+            this.window.$(ev.Data.Indicator).addClass(ev.Data.State);
             console.log(`onEvent - ${channel} channel`, ev);
             
         });
 
     }
 
+  
     start(): void {
         
         this.hubConnection.start()
@@ -153,8 +129,8 @@ export class ChannelService {
             });
     }
 
-    sub(channel: string): Observable<ChannelEvent> {
-
+    /* sub(channel: string): Observable<ChannelEvent> {
+        
         let channelSub = this.subjects.find((x: ChannelSubject) => {
             return x.channel === channel;
         }) as ChannelSubject;
@@ -184,7 +160,7 @@ export class ChannelService {
             });
 
         return channelSub.subject.asObservable();
-    }
+    } */
     
     publish(ev: ChannelEvent): void {
         this.hubProxy.invoke("Publish", ev);

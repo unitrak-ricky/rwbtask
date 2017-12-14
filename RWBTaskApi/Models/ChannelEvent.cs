@@ -3,6 +3,13 @@ using System;
 
 namespace RWBTaskApi.Models
 {
+    public class Status
+    {
+        public string State { get; set; }
+        public string Indicator { get; set; }
+        public decimal Price { get; set; }
+    }
+
     public class ChannelEvent
     {
         /// <summary>

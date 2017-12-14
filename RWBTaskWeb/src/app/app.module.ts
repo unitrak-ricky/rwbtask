@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 import "rxjs/add/operator/map";
 
 import { AppComponent } from './app.component';
-import { TaskComponent } from './task/task.component';
 import { EventListComponent } from './event-list/event-list.component';
 
 
@@ -32,7 +31,6 @@ channelConfig.hubName = "EventHub";
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent,
     EventListComponent
   ],
   imports: [

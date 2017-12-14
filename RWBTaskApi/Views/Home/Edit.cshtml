@@ -1,0 +1,68 @@
+﻿
+@model RWBTaskApi.Models.MarketPrice
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<div class="body-content">
+    <fieldset>
+        <legend>Person</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+       
+        <div>
+            <input type="submit" value="Update" />
+        </div>
+    </fieldset>
+</div>
+
+}
+@section Scripts {
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+        $('.btn-up-price').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'task/UpLinePrice',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('completed');
+                }
+            });
+        });
+
+        $('.btn-down-price').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'task/DownLinePrice',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('completed');
+                }
+            });
+            
+
+        });
+    })
+</script>
+}
